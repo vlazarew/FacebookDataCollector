@@ -1,5 +1,6 @@
 package com.mycompany.app;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.app.facebookUser.FacebookUser;
 import com.mycompany.app.pages.LoginPage;
 import com.mycompany.app.pages.ProfilePage;
@@ -10,6 +11,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.opera.OperaOptions;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -42,7 +47,7 @@ public class App {
         browser.manage().window().maximize();
 
         // На прогрузку страницы
-        browser.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        browser.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 
         return browser;
     }
@@ -50,9 +55,6 @@ public class App {
     private static void loginIntoFacebook(OperaDriver browser) {
         LoginPage loginPage = new LoginPage(browser, EMAIL, PASSWORD);
         loginPage.FillFields();
-
-        // На прогрузку страницы
-        browser.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     private static void fillNameLastName(OperaDriver browser) {
@@ -73,23 +75,67 @@ public class App {
     private static void visitFoundUser(OperaDriver browser, WebElement foundUser, String findPeopleURL,
                                        ArrayList<FacebookUser> foundFacebookUsers) {
         foundUser.click();
+        TimeUnit.SECONDS.sleep(1);
 
         foundFacebookUsers.add(getInfoAboutCurrentUser(browser));
-
-        TimeUnit.SECONDS.sleep(3);
         browser.get(findPeopleURL);
     }
 
     @SneakyThrows
     private static FacebookUser getInfoAboutCurrentUser(OperaDriver browser) {
-        FacebookUser user = new FacebookUser();
-
         UserProfilePage userProfilePage = new UserProfilePage(browser);
-        TimeUnit.SECONDS.sleep(3);
+
+        String profileURL = browser.getCurrentUrl();
+        String photoURL = userProfilePage.getUserPhoto().getAttribute("xlink:href");
+
         String userInfoURL = userProfilePage.getInformationButton().getAttribute("href");
         browser.get(userInfoURL);
 
-        return user;
+        TimeUnit.SECONDS.sleep(3);
+        String placeOfWork = "";
+        String study = "";
+        String homePlace = "";
+        String email = "";
+        String phoneNumber = "";
+        String website = "";
+
+        try {
+            placeOfWork = userProfilePage.getWorkInfo().getText();
+        } catch (Exception ignored) {
+        }
+
+        try {
+            study = userProfilePage.getProfessionEducationInfo().getText();
+        } catch (Exception ignored) {
+        }
+
+        try {
+            homePlace = userProfilePage.getHomePlaceInfo().getText();
+        } catch (Exception ignored) {
+        }
+
+        String userContactURL = userProfilePage.getContactInfoButton().getAttribute("href");
+        browser.get(userContactURL);
+        TimeUnit.SECONDS.sleep(3);
+
+        try {
+            email = userProfilePage.getEmailInfo().get(0).getText();
+        } catch (Exception ignored) {
+        }
+
+        try {
+            phoneNumber = userProfilePage.getPhoneNumberInfo().get(0).getText();
+        } catch (Exception ignored) {
+        }
+
+        try {
+            website = userProfilePage.getWebsiteInfo().getText();
+        } catch (Exception ignored) {
+        }
+
+        String[] names = userProfilePage.getNamesInfo().getText().split(" ");
+        return new FacebookUser(names[0], names[1], photoURL, placeOfWork, study, email, phoneNumber,
+                profileURL, homePlace, website);
     }
 
     @SneakyThrows
@@ -105,5 +151,29 @@ public class App {
         for (int i = 0; i < COUNT_OF_USERS; i++) {
             visitFoundUser(browser, foundUsers.get(i), findPeopleURL, foundFacebookUsers);
         }
+
+        makeOutputJSONFiles(foundFacebookUsers);
+        browser.close();
+    }
+
+    @SneakyThrows
+    private static void makeOutputJSONFiles(ArrayList<FacebookUser> foundFacebookUsers) {
+        ObjectMapper mapper = new ObjectMapper();
+        String workingDir = System.getProperty("user.dir");
+        String outputDir = workingDir + "/outputJSON";
+
+        File outputCalalog = new File(outputDir);
+        if (!outputCalalog.exists()) {
+            outputCalalog.mkdir();
+        }
+
+        for (FacebookUser facebookUser : foundFacebookUsers) {
+            String uid = facebookUser.getUID();
+            String outputJSON = outputDir + "/" + uid + ".json";
+
+            mapper.writeValue(new File(outputJSON), facebookUser);
+            System.out.println(outputJSON);
+        }
+
     }
 }
