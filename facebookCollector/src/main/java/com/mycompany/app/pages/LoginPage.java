@@ -1,5 +1,6 @@
 package com.mycompany.app.pages;
 
+import com.google.errorprone.annotations.concurrent.LazyInit;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.support.FindBy;
@@ -16,12 +17,15 @@ public class LoginPage {
         this.password = password;
     }
 
+    @LazyInit
     @FindBy(xpath = "//*[contains(@id, 'email')]")
     private WebElement emailTextBox;
 
+    @LazyInit
     @FindBy(xpath = "//*[contains(@id, 'pass')]")
     private WebElement passwordTextBox;
 
+    @LazyInit
     @FindBy(xpath = "//*[contains(@id, 'u_0_b')]")
     private WebElement loginButton;
 

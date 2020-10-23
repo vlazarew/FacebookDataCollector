@@ -26,16 +26,22 @@ public class UserProfilePage {
     @FindBy(xpath = "//span[(text() = 'Работа и образование')]/ancestor::a")
     private WebElement workAndEducationInfoButton;
 
+    private final String workInfoXPath = "//img[(contains(@src, 'https://static.xx.fbcdn.net/rsrc.php/v3/yt/r/Bo7x4xsiTje.png'))]/parent::div/following-sibling::div/div";
+
     @LazyInit
-    @FindBy(xpath = "//img[(contains(@src, 'https://static.xx.fbcdn.net/rsrc.php/v3/yt/r/Bo7x4xsiTje.png'))]/parent::div/following-sibling::div/div")
+    @FindBy(xpath = workInfoXPath)
     private WebElement workInfo;
 
-    @LazyInit
-    @FindBy(xpath = "//img[(contains(@src, 'https://static.xx.fbcdn.net/rsrc.php/v3/yN/r/j-QTXcNyQBK.png'))]/parent::div/following-sibling::div/div")
-    private WebElement professionEducationInfo;
+    private final String professionEducationXPath = "//img[(contains(@src, 'https://static.xx.fbcdn.net/rsrc.php/v3/yN/r/j-QTXcNyQBK.png'))]/parent::div/following-sibling::div/div";
 
     @LazyInit
-    @FindBy(xpath = "//img[(contains(@src, 'https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/poZ_P5BwYaV.png'))]/parent::div/following-sibling::div/div")
+    @FindBy(xpath = professionEducationXPath)
+    private WebElement professionEducationInfo;
+
+    private final String homeXPath = "//img[(contains(@src, 'https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/poZ_P5BwYaV.png'))]/parent::div/following-sibling::div/div";
+
+    @LazyInit
+    @FindBy(xpath = homeXPath)
     private WebElement homePlaceInfo;
 
     @LazyInit
@@ -50,16 +56,22 @@ public class UserProfilePage {
     @FindBy(xpath = "//span[(text() = 'Контактная и основная информация')]/ancestor::a")
     private WebElement contactInfoButton;
 
+    private final String phoneNumberXPath = "//img[(contains(@src, 'https://static.xx.fbcdn.net/rsrc.php/v3/yI/r/lzvufuLgbzd.png'))]/parent::div/following-sibling::div/div/div/div/div/div/span";
+
     @LazyInit
-    @FindBy(xpath = "//img[(contains(@src, 'https://static.xx.fbcdn.net/rsrc.php/v3/yI/r/lzvufuLgbzd.png'))]/parent::div/following-sibling::div/div/div/div/div/div/span")
+    @FindBy(xpath = phoneNumberXPath)
     private List<WebElement> phoneNumberInfo;
 
-    @LazyInit
-    @FindBy(xpath = "//img[(contains(@src, 'https://static.xx.fbcdn.net/rsrc.php/v3/yk/r/9p_UfjPVxUp.png'))]/parent::div/following-sibling::div/div/div/div/div/div/span")
-    private List<WebElement> emailInfo;
+    private final String emailXPath = "//img[(contains(@src, 'https://static.xx.fbcdn.net/rsrc.php/v3/yk/r/9p_UfjPVxUp.png'))]/parent::div/following-sibling::div/div/div/div/div/div/span";
 
     @LazyInit
-    @FindBy(xpath = "//img[(contains(@src, 'https://static.xx.fbcdn.net/rsrc.php/v3/yk/r/lDkqhYEMOUY.png'))]/parent::div/following-sibling::div/descendant::a")
+    @FindBy(xpath = emailXPath)
+    private List<WebElement> emailInfo;
+
+    private final String websiteXPath = "//img[(contains(@src, 'https://static.xx.fbcdn.net/rsrc.php/v3/yk/r/lDkqhYEMOUY.png'))]/parent::div/following-sibling::div/descendant::a";
+
+    @LazyInit
+    @FindBy(xpath = websiteXPath)
     private WebElement websiteInfo;
 
     @LazyInit

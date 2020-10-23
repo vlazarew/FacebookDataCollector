@@ -1,0 +1,24 @@
+{
+  "elems": {
+    " (copy)": {
+      "firstName": "Владимир",
+      "lastName": "Лазарев",
+      "city": "Москва",
+      "countOfUsers": 5,
+      "study": "\"\"",
+      "work": "\"\"",
+      "countOfThreads": 5,
+      "outputPath": "D:\\Универ\\МГУ\\5 курс\\ИСП РАН\\FacebookDataCollector\\outputJSON\\Vladimir Lazarev"
+    },
+    "": {
+      "firstName": "Дмитрий",
+      "lastName": "Медведев",
+      "city": "Москва",
+      "countOfUsers": 10,
+      "study": "\"\"",
+      "work": "\"\"",
+      "countOfThreads": 5,
+      "outputPath": "D:\\Универ\\МГУ\\5 курс\\ИСП РАН\\FacebookDataCollector\\outputJSON\\Dmitriy Medvedev"
+    }
+  }
+}

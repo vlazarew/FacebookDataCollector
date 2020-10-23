@@ -1,4 +1,4 @@
-package com.mycompany.app.facebookUser;
+package com.mycompany.app.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

@@ -1,5 +1,6 @@
 package com.mycompany.app.pages;
 
+import com.google.errorprone.annotations.concurrent.LazyInit;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.opera.OperaDriver;
@@ -12,9 +13,11 @@ public class ProfilePage {
         PageFactory.initElements(browser, this);
     }
 
+    @LazyInit
     @FindBy(xpath = "//*[contains(@href, 'https://www.facebook.com/friends/')]")
     private WebElement findFriendsButton;
 
+    @LazyInit
     @FindBy(xpath = "//*[contains(@placeholder, 'Поиск на Facebook')]")
     private WebElement findFriendsInput;
 

@@ -19,7 +19,7 @@ target/
 *.iml
 *.ipr
 
-outputJSON
+#outputJSON
 
 ### NetBeans ###
 /nbproject/private/
