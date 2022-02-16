@@ -1,0 +1,10 @@
+  {
+    "firstName": "Дмитрий",
+    "lastName": "Медведев",
+    "city": "Москва",
+    "countOfUsers": 8,
+    "study": "",
+    "work": "Газпром",
+    "countOfThreads": 5,
+    "outputPath": "D:\\Универ\\МГУ\\5 курс\\ИСП РАН\\FacebookDataCollector\\outputJSON\\Dmitriy Medvedev"
+  }
